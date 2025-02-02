@@ -8,15 +8,18 @@ import {
   Delete,
   Query,
   NotFoundException,
+  UseGuards
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { Product } from './schemas/product.schema';
+import { AuthGuard } from '../auth/auth.guard';  // นำเข้า AuthGuard
 
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Get()
+  @UseGuards(AuthGuard)
   async findAllPaginated(
     @Query('page') page: number = 1, // ค่าเริ่มต้นคือ 1
     @Query('limit') limit: number = 10, // ค่าเริ่มต้นคือ 10

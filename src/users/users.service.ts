@@ -13,7 +13,12 @@ export class UsersService {
     const newUser = new this.userModel(createUserDto);
     return newUser.save();
   }
-
+  async findByUsername(username: string): Promise<User | undefined> {
+    const user = await this.userModel.findOne({ username }); // เพิ่ม await ตรงนี้
+    console.log(user);
+    return user ?? undefined;
+  }
+  
   async getAllUsers() {
     return this.userModel.find().exec();
   }
